@@ -1,0 +1,27 @@
+# Databricks App Configuration
+# This file configures how the Flask app runs in Databricks
+
+# App command to start the Flask server
+command:
+  - "python"
+  - "app.py"
+
+# Environment configuration
+env:
+  FLASK_APP: app.py
+  FLASK_ENV: production
+
+# Port configuration (Databricks Apps typically use port 8080)
+port: 8080
+
+# Health check endpoint
+health_check:
+  path: /health
+  interval: 30
+  timeout: 5
+
+# Resource requirements
+resources:
+  memory: 1Gi
+  cpu: 1
+

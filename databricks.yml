@@ -1,0 +1,54 @@
+# This is a Databricks asset bundle definition for soc-agent-app.
+# The Databricks extension requires databricks.yml configuration file.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+
+bundle:
+  name: soc-agent-app
+
+include:
+  - resources/*.yml
+
+resources:
+  apps:
+    soc_agent_app:
+      name: soc-agent-app
+      description: "File upload application for Unity Catalog volumes"
+      
+      # App configuration
+      resources:
+        - name: app-files
+          source_code_path: .
+      
+      # Python dependencies
+      python:
+        dependencies:
+          - Flask==3.0.0
+          - Werkzeug==3.0.1
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://e2-demo-west.cloud.databricks.com
+    
+    resources:
+      apps:
+        soc_agent_app:
+          # Development specific settings
+          permissions:
+            - level: CAN_USE
+              user_name: jason.taylor@databricks.com
+
+  ## Optionally, there could be 'staging' or 'prod' targets here.
+  #
+  # prod:
+  #   mode: production
+  #   workspace:
+  #     host: https://e2-demo-west.cloud.databricks.com
+  #   resources:
+  #     apps:
+  #       soc_agent_app:
+  #         permissions:
+  #           - level: CAN_USE
+  #             group_name: users

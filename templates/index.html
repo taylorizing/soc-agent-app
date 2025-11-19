@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload - Databricks App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📁 File Upload to Unity Catalog</h1>
+            <p class="subtitle">Upload files to Unity Catalog Volume</p>
+        </header>
+
+        <div class="info-card">
+            <div class="info-item">
+                <span class="info-label">Target Volume:</span>
+                <span class="info-value">{{ upload_path }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Allowed Types:</span>
+                <span class="info-value">{{ allowed_extensions }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Max File Size:</span>
+                <span class="info-value">16 MB</span>
+            </div>
+        </div>
+
+        <div class="upload-section">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div class="file-input-wrapper">
+                    <input type="file" id="fileInput" name="file" required>
+                    <label for="fileInput" class="file-input-label">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <span id="fileName">Choose a file or drag it here</span>
+                    </label>
+                </div>
+                <button type="submit" class="upload-btn" id="uploadBtn">
+                    <span class="btn-text">Upload File</span>
+                    <span class="btn-spinner" style="display: none;"></span>
+                </button>
+            </form>
+
+            <div id="message" class="message" style="display: none;"></div>
+        </div>
+
+        <div class="files-section">
+            <div class="section-header">
+                <h2>📂 Uploaded Files</h2>
+                <button id="refreshBtn" class="refresh-btn" title="Refresh file list">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <polyline points="1 20 1 14 7 14"></polyline>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="filesList" class="files-list">
+                {% if uploaded_files %}
+                    {% for file in uploaded_files %}
+                    <div class="file-item">
+                        <div class="file-icon">📄</div>
+                        <div class="file-info">
+                            <div class="file-name">{{ file.name }}</div>
+                            <div class="file-meta">
+                                <span>{{ "%.2f"|format(file.size / 1024) }} KB</span>
+                                <span>•</span>
+                                <span>{{ file.modified }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <p>No files uploaded yet</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
+
