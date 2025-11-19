@@ -1,4 +1,9 @@
 # Databricks App Configuration
 # This file configures how the Flask app runs in Databricks
 
-command: ["python", "app.py"]
+command: [
+  "flask",
+  "--app",
+  "app.py",
+  "run"
+]
