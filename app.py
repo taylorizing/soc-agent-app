@@ -143,8 +143,11 @@ def health():
             'error': str(e)
         }), 500
 
+# if __name__ == '__main__':
+#     # This is for local development only
+#     # In Databricks, the app will be run by the platform
+#     app.run(host='0.0.0.0', port=8080, debug=True)
+
 if __name__ == '__main__':
-    # This is for local development only
-    # In Databricks, the app will be run by the platform
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    flask_app.run(debug=True)
 
