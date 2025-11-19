@@ -1,10 +1,13 @@
 # Databricks App Configuration
 # This file configures how the Flask app runs in Databricks
 
-# App command to start the Flask server
 command: [
   "flask",
   "--app",
   "app.py",
-  "run"
+  "run",
+  "--host",
+  "0.0.0.0",
+  "--port",
+  "8080"
 ]
